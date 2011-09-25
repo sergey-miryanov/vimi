@@ -2,7 +2,7 @@
     set nocompatible " be iMproved
     filetype off     " required!
 
-    set rtp+=~/.vim/bundle/vundle/
+    set rtp+=~/vimi/.vim/bundle/vundle/
     call vundle#rc()
 
     " let Vundle manage Vundle
@@ -159,13 +159,13 @@
         set statusline=\ 
         set statusline+=%<                   " where truncate if line too long
         set statusline+=%F                  " filename with full path
-        set statusline+=%=                  " separation between left and right
-        set statusline+=%{HasPaste()}
+        " set statusline+=%=                  " separation between left and right
+        set statusline+=\ %{HasPaste()}
         set statusline+=%{&fileencoding}
         set statusline+=\ \ %Y              " type of file
         set statusline+=\ \ %1.3(%c%)       " column number
-        set statusline+=\ \ %3.9(%l/%L%)    " line / total lines
-        set statusline+=\ \ %1.2p%%         " percentage through file in lines
+        set statusline+=\ \ %5.9(%l/%L%)    " line / total lines
+        set statusline+=\ \ %2.2p%%         " percentage through file in lines
         set statusline+=\ 
         fun! HasPaste()
             if &paste
@@ -422,6 +422,10 @@
         " camelCase => camel_case
         vnoremap <silent> ,c :s/\v\C(([a-z]+)([A-Z]))/\2_\l\3/g<CR>
 
+    nnoremap <leader>ed <C-w>s<C-w>j<C-w>L:e ~/Dropbox/<cr>
+
+    " Double space to ". "
+        imap <Space><Space> . 
 
 
 
