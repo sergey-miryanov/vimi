@@ -8,7 +8,7 @@
     set nocompatible " be iMproved
     filetype off     " required!
 
-    set rtp+=~/vimi/.vim/bundle/vundle/
+    set runtimepath+=~/src/vimi/.vim/bundle/vundle/
     call vundle#rc()
 
     " let Vundle manage Vundle
@@ -23,10 +23,10 @@
         Bundle 'L9'
     " Interface
         Bundle 'git://github.com/altercation/vim-colors-solarized.git'
+        Bundle 'git://github.com/vim-scripts/wombat256.vim'
+        Bundle 'git://github.com/vim-scripts/Wombat'
         Bundle 'git://github.com/scrooloose/nerdtree.git'
         Bundle 'git://github.com/ervandew/supertab.git'
-        "Bundle 'git://github.com/wincent/Command-T.git'
-        "Bundle 'git://github.com/vim-scripts/taglist.vim.git'
         " depends: http://ctags.sourceforge.net/
         "Bundle 'git://github.com/int3/vim-taglist-plus.git'
         Bundle 'git://github.com/vim-scripts/IndexedSearch.git'
@@ -37,12 +37,9 @@
         Bundle 'git://github.com/miripiruni/vimi-snippets.git'
         Bundle 'git://github.com/mileszs/ack.vim.git'
         Bundle 'git://github.com/scrooloose/nerdcommenter.git'
-        "Bundle 'git://github.com/tpope/vim-surround.git'
-        "Bundle 'git://github.com/tpope/vim-fugitive.git'
         "Bundle 'git://github.com/tsaleh/vim-align.git'
         "Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
         "Bundle 'git://github.com/vim-scripts/delimitMate.vim.git'
-        "Bundle 'git://github.com/sjl/gundo.vim.git'
         "Bundle 'git://github.com/edsono/vim-matchit.git'
         Bundle 'git://github.com/sjl/threesome.vim.git'
         "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
@@ -83,6 +80,13 @@
         "Bundle 'git://github.com/vim-ruby/vim-ruby.git'
         "Bundle 'git://github.com/tpope/vim-rails.git'
         "Bundle 'git://github.com/tpope/vim-endwise.git'
+    " Python (from http://sontek.net/turning-vim-into-a-modern-python-ide)
+        Bundle 'git://github.com/tpope/vim-surround.git'
+        Bundle 'git://github.com/tpope/vim-fugitive.git'
+        Bundle 'git://github.com/fs111/pydoc.vim.git'
+        Bundle 'git://github.com/vim-scripts/pep8.git'
+        Bundle 'git://github.com/vim-scripts/TaskList.vim.git'
+        Bundle 'git://github.com/sontek/rope-vim.git'
 
     filetype plugin indent on     " required!
     " Brief help
@@ -129,16 +133,16 @@
     set list                " display unprintable characters
     set wrap                " Включаем перенос строк (http://vimcasts.org/episodes/soft-wrapping-text/)
     if version >= 703
-        set colorcolumn=80 " Подсвечиваем 80 столбец
+        set colorcolumn=120 " Подсвечиваем 120 столбец
     end
     set formatoptions-=o    " dont continue comments when pushing o/O
     set linebreak           " Перенос не разрывая слов
     set autoindent          " Копирует отступ от предыдущей строки
     set smartindent         " Включаем 'умную' автоматическую расстановку отступов
     set expandtab
-    set shiftwidth=4        " Размер сдвига при нажатии на клавиши << и >>
-    set tabstop=4           " Размер табуляции
-    set softtabstop=4
+    set shiftwidth=2        " Размер сдвига при нажатии на клавиши << и >>
+    set tabstop=2           " Размер табуляции
+    set softtabstop=2
     set linespace=1         " add some line space for easy reading
     set cursorline          " Подсветка строки, в которой находится в данный момент курсор
     set gcr=n:blinkon0      " Отключаем мигание курсора в MacVim. Больше никакого стресса.
@@ -153,9 +157,19 @@
 
     set hidden " this allows to edit several files in the same time without having to save them
 
-    " Не бибикать!
-        set visualbell " Use visual bell instead of beeping
-        set t_vb=
+    " Для питона отступы по 4 символа
+    autocmd FileType python set ts=4
+    autocmd FileType python set sts=4
+    autocmd FileType python set sw=4
+
+    " Для cpp - по 2
+    autocmd FileType cpp set ts=2
+    autocmd FileType cpp set sts=2
+    autocmd FileType cpp set sw=2
+
+    " Бибикать а не мигать!
+        "set visualbell " Use visual bell instead of beeping
+        "set t_vb=
 
     " Символ табуляции и конца строки
         if has('multi_byte')
@@ -187,7 +201,7 @@
         endfunction
 
         function! CurDir()
-            let curdir = substitute(expand('%:p'), '/home/miripiruni', '~', 'g')
+            let curdir = substitute(expand('%:p'), '/home/zerg', '~', 'g')
             return curdir
         endfunction
 
@@ -252,12 +266,12 @@
 
             let line = strpart(line, 0, windowwidth - 2 - len(foldedlinecount))
             let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-            return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+            return line . repeat(" ",fillcharcount) . foldedlinecount . ' '
         endfunction
         set foldtext=MyFoldText()
 
         set foldcolumn=0        " Ширина строки где располагается фолдинг
-        set foldmethod=indent   " Фолдинг по отступам
+        set foldmethod=syntax   " Фолдинг по синтаксису
         set foldnestmax=10      " Глубина фолдинга 10 уровней
         set nofoldenable        " Не фолдить по умолчанию
         set foldlevel=1         " This is just what i use
@@ -385,14 +399,14 @@
 
     " Disable <Arrow keys>
         " Warning: nightmare mode!
-        inoremap <Up> <NOP>
-        inoremap <Down> <NOP>
-        inoremap <Left> <NOP>
-        inoremap <Right> <NOP>
-        noremap <Up> <NOP>
-        noremap <Down> <NOP>
-        noremap <Left> <NOP>
-        noremap <Right> <NOP>
+        "inoremap <Up> <NOP>
+        "inoremap <Down> <NOP>
+        "inoremap <Left> <NOP>
+        "inoremap <Right> <NOP>
+        "noremap <Up> <NOP>
+        "noremap <Down> <NOP>
+        "noremap <Left> <NOP>
+        "noremap <Right> <NOP>
         " Позволяем передвигаться с помощью hjkl в Insert mode зажав <Ctrl>
         imap <C-h> <C-o>h
         imap <C-j> <C-o>j
@@ -404,7 +418,7 @@
         nmap <leader>v :tabedit $MYVIMRC<CR>
 
     " <Space> = <PageDown> Как в браузерах
-        nmap <Space> <PageDown>
+    "    nmap <Space> <PageDown>
 
     " n и N
         " когда бегаем по результатам поиска, то пусть они всегда будут в центре
@@ -463,7 +477,7 @@
         vnoremap <silent> <Leader>c :s/\v\C(([a-z]+)([A-Z]))/\2_\l\3/g<CR>
 
     " Double space to ". "
-        imap <Space><Space> . 
+        "imap <Space><Space> . 
 
     " Fix Trailing White Space
         map <leader>ts :%s/\s\+$//e<CR>
@@ -521,6 +535,23 @@
     " Auto change the directory to the current file I'm working on
         autocmd BufEnter * lcd %:p:h
 
+    " Переходим по файлам вперед/назад
+        noremap <A-LEFT> <C-O>
+        noremap <A-RIGHT> <C-I>
+    " Переходим по результатам поиска
+        noremap <C-Down> :cn<CR>
+        noremap <C-Up> :cp<CR>
+    " Копируем/вставляем
+        noremap <C-c> "+y
+        noremap <C-x> "+x
+        noremap <C-Ins> "+gP
+        noremap <C-i> "+gP
+    " Дополнительные клавиши
+        noremap <Ins> i
+        noremap <C-t> :tabnew<CR>
+        noremap <C-\> :set nowrap<CR>
+        noremap <BS> :b#<CR>
+        noremap <Space> za
 
 
 
@@ -532,10 +563,13 @@
         let g:solarized_termcolors=256
         set background=dark
         colorscheme solarized
+        if has("gui_running")
+          colorscheme wombat
+        endif
         call togglebg#map("<Leader>b")
 
     " NERDTree
-        nmap <Bs> :NERDTreeToggle<CR>
+        nmap ` :NERDTreeToggle<CR>
         let NERDTreeShowBookmarks=1
         let NERDTreeChDirMode=2
         let NERDTreeQuitOnOpen=1
@@ -565,3 +599,6 @@
 
     " VimWiki
         let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
+
+    " PEP8
+        let g:pep8_map='<F2>'
