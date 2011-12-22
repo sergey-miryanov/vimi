@@ -87,6 +87,11 @@
         Bundle 'git://github.com/vim-scripts/pep8.git'
         Bundle 'git://github.com/vim-scripts/TaskList.vim.git'
         Bundle 'git://github.com/sontek/rope-vim.git'
+    " HaXe
+        Bundle 'git://github.com/vim-scripts/vim-haxe.git'
+        Bundle 'git://github.com/vim-scripts/vim-addon-manager.git'
+        Bundle "MarcWeber/vim-addon-mw-utils"
+        Bundle "tomtom/tlib_vim"
 
     filetype plugin indent on     " required!
     " Brief help
@@ -132,9 +137,9 @@
     set showtabline=1       " Показывать табы всегда
     set list                " display unprintable characters
     set wrap                " Включаем перенос строк (http://vimcasts.org/episodes/soft-wrapping-text/)
-    if version >= 703
-        set colorcolumn=120 " Подсвечиваем 120 столбец
-    end
+    "if version >= 703
+    "    set colorcolumn=120 " Подсвечиваем 120 столбец
+    "end
     set formatoptions-=o    " dont continue comments when pushing o/O
     set linebreak           " Перенос не разрывая слов
     set autoindent          " Копирует отступ от предыдущей строки
@@ -166,6 +171,10 @@
     autocmd FileType cpp set ts=2
     autocmd FileType cpp set sts=2
     autocmd FileType cpp set sw=2
+
+    autocmd BufReadPost *.as set ft=actionscript
+    autocmd BufReadPost *.hx set ft=haxe
+
 
     " Бибикать а не мигать!
         "set visualbell " Use visual bell instead of beeping
@@ -272,7 +281,7 @@
         set foldtext=MyFoldText()
 
         set foldcolumn=0        " Ширина строки где располагается фолдинг
-        set foldmethod=syntax   " Фолдинг по синтаксису
+        set foldmethod=indent   " Фолдинг по отступам
         set foldnestmax=10      " Глубина фолдинга 10 уровней
         set nofoldenable        " Не фолдить по умолчанию
         set foldlevel=1         " This is just what i use
@@ -553,6 +562,8 @@
         noremap <C-\> :set nowrap<CR>
         noremap <BS> :b#<CR>
         noremap <Space> za
+        noremap <C-Tab> :tabp<CR>
+        noremap <S-Tab> :tabn<CR>
 
 
 
