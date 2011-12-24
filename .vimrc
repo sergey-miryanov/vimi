@@ -92,6 +92,8 @@
         Bundle 'git://github.com/vim-scripts/vim-addon-manager.git'
         Bundle "MarcWeber/vim-addon-mw-utils"
         Bundle "tomtom/tlib_vim"
+    " Erlang
+        Bundle "Vimerl"
 
     filetype plugin indent on     " required!
     " Brief help
