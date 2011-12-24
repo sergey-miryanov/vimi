@@ -302,7 +302,7 @@
     set hlsearch    " Включаем подсветку выражения, которое ищется в тексте
     set ignorecase  " Игнорировать регистр букв при поиске
     set smartcase   " Override the 'ignorecase' if the search pattern contains upper case characters
-    set gdefault    " Включает флаг g в командах замены, типа :s/a/b/
+    "set gdefault    " Включает флаг g в командах замены, типа :s/a/b/
 
 
 
